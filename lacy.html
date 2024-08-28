@@ -1,5 +1,5 @@
 <!--
-author:     Jonas Köhler De la Rosa - 
+author:     Jonas Köhler De la Rosa
 date:       2024-08-13
 license:    https://creativecommons.org/licenses/by-sa/4.0/
 -->
@@ -24,7 +24,8 @@ license:    https://creativecommons.org/licenses/by-sa/4.0/
 </head>
 <script>
 
-    var replace = (text,o,i)=> (text.split(o).join(i));
+    var replace = (text,o,i)=> (text.split(o).join(i));        // replace i with o in text
+    var cap = (s) => (s.charAt(0).toUpperCase() + s.slice(1)); // capitalize string
     var translit=(x,i)=>{
         
             la={"šč":"щ",
@@ -98,7 +99,7 @@ license:    https://creativecommons.org/licenses/by-sa/4.0/
 
         for (l in table){
             x=replace(x,l,table[l]);
-            x=replace(x,l.toUpperCase(),table[l].toUpperCase());
+            x=replace(x,cap(l),cap(table[l]));
         }
         return x;
     }
