@@ -11,12 +11,12 @@ license:    https://creativecommons.org/licenses/by-sa/4.0/
             font-family: 'sans-serif', 'monospace';
             font-size: 18px;
             margin-bottom: 1em;
-            padding: .5em;
+            padding: .2em;
         }
 
         textarea{
             width:100%;
-            height: 20em;
+            height: 40em;
             resize:none;
             outline: none;
         }
@@ -24,96 +24,76 @@ license:    https://creativecommons.org/licenses/by-sa/4.0/
 </head>
 <script>
 
+    var lang = '';
     var replace = (text,o,i)=> (text.split(o).join(i));        // replace i with o in text
     var cap = (s) => (s.charAt(0).toUpperCase() + s.slice(1)); // capitalize string
     var translit=(x,i)=>{
+
+        //cyrillic alphabet
+    var cy = ["а","б","в","г","ґ","ѓ","д","ђ","е","ѐ","є","ё","ж","з","з́","ѕ","и","ѝ","і","î","ї","й","ј","к","ќ","л","л̌","љ","м","н","њ","о","ô","п","р","с","ć","т","ћ","у","ӱ","ў","ф","х","ц","ч","џ","ш","щ","ъ","ы","ь","ѣ","э","ю","я","ѫ","ѳ","ѵ","’"];
+
+        //latin transliterations for...
+    
+    var la ={
+    //ukrainian
+    "ukr": ["a","b","v","h","g","□","d","□","e","□","je","□","ž","z","□","□","y","□","i","□","ï","j","□","k","□","l","□","□","m","n","□","o","□","p","r","s","□","t","□","u","□","□","f","ch","c","č","□","š","šč","□","□","ʹ","□","□","ju","ja","□","□","□","ʼ"],
+    
+    //rusyn
+    "rue" : ["a","b","v","h","g","□","d","đ","e","□","je","ë","ž","z","□","□","y","□","i","î","ï","j","□","k","□","l","ł","□","m","n","□","o","ô","p","r","s","□","t","□","u","ü","□","f","ch","c","č","□","š","šč","ʺ","ŷ","ʹ","ǐ","□","ju","ja","□","□","□","ʼ"],
+
+    //pannonian/yugoslav rusyn
+    "rsk": ["a","b","v","h","g","□","d","đ","e","□","je","ë","ž","z","□","□","i","□","i","î","ï","j","□","k","□","l","ł","□","m","n","□","o","ô","p","r","s","□","t","□","u","ü","□","f","ch","c","č","□","š","šč","ʺ","ŷ","ʹ","ǐ","□","ju","ja","□","□","□","ʼ"],
+     
+    //belarusian
+    "bel": ["a","b","v","h","□","□","d","□","e","□","□","ë","ž","z","□","□","□","□","i","□","□","j","□","k","□","l","□","□","m","n","□","o","□","p","r","s","□","t","□","u","□","ŭ","f","ch","c","č","□","š","□","ʺ","y","ʹ","□","ė","ju","ja","□","□","□","ʼ"],
+       
+    //russian
+    "rus": ["a","b","v","g","□","□","d","□","e","□","□","ë","ž","z","□","□","i","□","ï","□","□","j","□","k","□","l","□","□","m","n","□","o","□","p","r","s","□","t","□","u","□","□","f","ch","c","č","□","š","šč","□","y","ʹ","ě","ė","ju","ja","□","ḟ","ẏ","□"],
+    
+    //bulgarian
+    "bul": ["a","b","v","g","□","□","d","□","e","□","□","□","ž","z","□","□","i","ì","ï","□","□","j","□","k","□","l","□","□","m","n","□","o","□","p","r","s","□","t","□","u","□","□","f","ch","c","č","□","š","št","ă","□","ʹ","ě","□","ju","ja","ȧ","ḟ","ẏ","□"],
         
-            la={"šč":"щ",
-                "ch":"х",
-                "ja":"я",
-                "ju":"ю",
-                "š":"ш",
-                "č":"ч",
-                "ž":"ж",
-                "ch":"х",
-                "c":"ц",
-                "e":"е",
-                "y":"ы",
-                "\"":"ъ",
-                "'":"ь",
-                "a":"а",
-                "ė":"э",
-                "i":"и",
-                "o":"о",
-                "u":"у",
-                "b":"б",
-                "d":"д",
-                "f":"ф",
-                "g":"г",
-                "k":"к",
-                "l":"л",
-                "m":"м",
-                "n":"н",
-                "p":"п",
-                "r":"р",
-                "s":"с",
-                "t":"т",
-                "v":"в",
-                "j":"й",
-                "z":"з"}
+    //macedonian
+    "mkd": ["a","b","v","g","□","ǵ","d","□","e","è","□","□","ž","z","□","dz","i","ì","□","□","□","□","j","k","ḱ","l","□","lj","m","n","nj","o","□","p","r","s","□","t","□","u","□","□","f","h","c","č","dž","š","□","□","□","□","□","□","□","□","□","□","□","ʼ"],
+        
+    //serbo-croatian
+    "hbs": ["a","b","v","g","□","□","d","đ","e","□","□","□","ž","z","□","□","i","□","□","□","□","□","j","k","□","l","□","lj","m","n","nj","o","□","p","r","s","□","t","ć","u","□","□","f","h","c","č","dž","š","□","□","□","□","□","□","□","□","□","□","□","□"],
+        
+    //montenegrin
+    "cnr": ["a","b","v","g","□","□","d","đ","e","□","□","□","ž","z","ź","□","i","□","□","□","□","□","j","k","□","l","□","lj","m","n","nj","o","□","p","r","s","ś","t","ć","u","□","□","f","h","c","č","dž","š","□","□","□","□","□","□","□","□","□","□","□","□"]
 
-            cy={"щ":"šč",
-                "ш":"š",
-                "ч":"č",
-                "ж":"ž",
-                "х":"ch",
-                "ц":"c",
-                "я":"ja",
-                "е":"e",
-                "ю":"ju",
-                "ы":"y",
-                "ъ":"\"",
-                "ь":"'",
-                "а":"a",
-                "э":"ė",
-                "и":"i",
-                "о":"o",
-                "у":"u",
-                "б":"b",
-                "д":"d",
-                "ф":"f",
-                "г":"g",
-                "к":"k",
-                "л":"l",
-                "м":"m",
-                "н":"n",
-                "п":"p",
-                "р":"r",
-                "с":"s",
-                "т":"t",
-                "в":"v",
-                "й":"j",
-                "з":"z"}
+};
+            alphabet=la[lang];
 
-            table=(i?la:cy)
-
-        for (l in table){
-            x=replace(x,l,table[l]);
-            x=replace(x,cap(l),cap(table[l]));
+        for (var a = 0; a<cy.length;a++){
+            x=replace(x,cy[a],alphabet[a]);
+            x=replace(x,cap(cy[a]),cap(alphabet[a]));
         }
         return x;
     }
 
-    var go=(i)=>{
-        var la = document.getElementById("in").value;
-        document.getElementById("out").value=translit(la,i);
+    var go=()=>{
+        lang = document.getElementById('lang').value;
+        var t = document.getElementById("txt").value;
+        var result = translit(t);
+        document.getElementById("txt").value=result;
+        if(result.includes("□")) alert("ACHTUNG:\nDer Text beinhaltet Zeichen, die im Alphabet der ausgewählten Sprache nicht vorkommen.");
     }
 </script>
 <body spellcheck="false">
-    <textarea id="in"></textarea>
-    <br/>
-    transliterate from... <button onclick="go(1)">latin</button> <button onclick="go(0)">cyrillic</button>
-    <br/>
-    <textarea id="out"></textarea>
+    <span>Sprache: </span>
+    <select name="Language" id="lang">
+        <option value="ukr">Ukrainisch</option>
+        <option value="rue">Russinisch</option>
+        <option value="rsk">Süd-Russinisch</option>
+        <option value="bel">Belarusisch</option>
+        <option value="rus">Russisch</option>
+        <option value="bul">Bulgarisch</option>
+        <option value="mkd">Makedonisch</option>
+        <option value="hbs">Serbokroatisch</option>
+        <option value="cnr">Montenegrinisch</option>
+      </select>
+    <button onclick="go()">umwandeln</button>
+    <textarea id="txt"></textarea>
 </body>
 </html>
