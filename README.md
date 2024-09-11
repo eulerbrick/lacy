@@ -9,7 +9,7 @@ creative commons BY-SA 4.0 license - [https://creativecommons.org/licenses/by-sa
 
 This tool is published with no warranty as to its correctness or completeness.\
 Please understand that this is not just a disclaimer. This is (currently) a one person project.\
-I am not a native speaker or even a student of the supported Languages, so if in doubt, always double-check the results.
+I am not a native speaker or even a student of the supported languages, so if in doubt, always double-check the results.
 
 If you encounter technical or linguistic errors, or if you have ideas for UI improvements or new features, you are welcome to contact me:\
 [jonas.koehler@tutanota.de]
