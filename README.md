@@ -12,5 +12,5 @@ Please understand that this is not just a disclaimer. This is (currently) a one 
 I am not a native speaker or even a student of the supported languages.\
 So if in doubt, always double-check the results.
 
-If you encounter technical or linguistic errors, or if you have ideas for UI improvements or new features, you are welcome to contact me:\
-[jonas.koehler@tutanota.de]
+If you encounter technical or linguistic errors, or if you have ideas for UI improvements or new features,\
+you are welcome to [contact me](mailto:jonas.koehler@tutanota.de).
