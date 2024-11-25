@@ -1,5 +1,5 @@
 # lacy
-lacy is a simple webtool for text transliteration between the latin and cyrillic alphabets.\
+[lacy](https://eulerbrick.github.io/lacy/lacy.html) is a simple webtool for text transliteration between the latin and cyrillic alphabets.\
 latin - la ... cyrillic - cy ... lacy :)
 
 It was specifically developed for the Institute of Slavic Studies at the University of Potsdam, and therefore adheres to their\
